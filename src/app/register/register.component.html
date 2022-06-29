@@ -1,21 +1,39 @@
-<div class="component-body position-relative">
+<div class="register-body position-relative">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <div class="heading display-6">{{ heading }}</div>
       </div>
     </div>
+
     <div class="row">
       <div class="col-12">
         <div class="card-place">
-          <form [formGroup]="loginForm">
+          <form>
             <div
               class="card position-absolute top-50 start-50 translate-middle"
               style="width: 70%"
             >
-              <h2 class="text-center mt-3">Login</h2>
+              <h2 class="text-center mt-3">Register</h2>
               <div class="card-body">
                 <div>
+                  <label for="" class="text-secondary mb-2">Your name</label>
+                </div>
+                <div class="input-group form-group">
+                  <div class="icon">
+                    <span class="material-symbols-outlined"> person </span>
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    placeholder="First Name"
+                    id="name"
+                    required
+                  />
+                </div>
+
+                <div class="mt-3">
                   <label for="" class="text-secondary mb-2"
                     >username (use numbers)</label
                   >
@@ -29,21 +47,11 @@
                   <input
                     type="text"
                     name="username"
-                    formControlName="username"
                     class="form-control"
                     placeholder="User name"
                     id="login_accno"
                     required
                   />
-                </div>
-                <div
-                  class="mt-2 ps-2 text-danger"
-                  *ngIf="
-                    this.loginForm.get('username')?.touched &&
-                    this.loginForm.get('username')?.errors
-                  "
-                >
-                  invalid form
                 </div>
 
                 <div>
@@ -58,47 +66,34 @@
                   <input
                     type="password"
                     name="password"
-                    formControlName="password"
                     class="form-control"
                     placeholder="Password"
                     id="login_password"
                     required
                   />
                 </div>
-                <div
-                  class="mt-2 ps-2 text-danger"
-                  *ngIf="
-                    this.loginForm.get('password')?.touched &&
-                    this.loginForm.get('pass')?.errors
-                  "
-                >
-                  invalid form
-                </div>
 
-                <div class="container px-3 mt-4">
-                  <div class="row gx-3">
+                <div class="container px-4">
+                  <div class="row gx-5">
                     <div class="col">
-                      <button
-                        class="btn btn-primary"
-                        style="width: 100%"
-                        type="button"
-                      >
+                      <p class="mt-4 text-end">
                         <a
-                          class="text-light text-decoration-none"
-                          routerLink="register"
-                          >Register</a
+                          class="text-secondary text-decoration-none"
+                          routerLink=""
+                          >Already a member ?</a
                         >
-                      </button>
+                      </p>
                     </div>
                     <div class="col">
-                      <button
-                        class="btn btn-primary"
-                        style="width: 100%; background-color: green"
-                        value="Login"
-                        type="submit"
-                      >
-                        Login
-                      </button>
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-primary mt-4"
+                          style="width: 100%"
+                        >
+                          Register
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

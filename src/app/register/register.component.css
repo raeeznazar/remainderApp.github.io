@@ -1,4 +1,4 @@
-.component-body {
+.register-body {
   background-image: url("src/assets/login.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -25,15 +25,4 @@
   padding-top: 6px;
   padding-right: 6px;
   padding-left: 6px;
-}
-
-.btn-login-register {
-  padding-right: 6px;
-  padding-left: 6px;
-}
-
-@media screen and (max-width: 901px) {
-  .heading {
-    margin-top: 17%;
-  }
 }
