@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400&display=swap");
 
-body {
-  background-image: url(./assets/login.png),
+/* body {
+  background-image: url(src/assets/login.png),
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: multiply;
   height: 100%;
   font-family: "Numans", sans-serif;
+} */
+
+body {
+  height: 100%;
 }

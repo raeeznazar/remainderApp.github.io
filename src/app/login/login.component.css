@@ -1,0 +1,35 @@
+.component-body {
+  background-image: url("src/assets/login.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: multiply;
+  height: 100vh;
+}
+
+.card-place {
+  margin-top: 30%;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 50;
+}
+
+.icon {
+  border: 1px grey solid;
+  padding-top: 6px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+.btn-login-register {
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+@media screen and (max-width: 820px) {
+  .card {
+    width: 100% !important;
+    margin-top: 50%;
+  }
+}
