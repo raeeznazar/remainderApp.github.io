@@ -32,8 +32,15 @@
   padding-left: 6px;
 }
 
-@media screen and (max-width: 901px) {
+@media screen and (max-width: 912px) {
   .heading {
     margin-top: 17%;
+  }
+
+  .card-style {
+    width: 90% !important;
+  }
+  .colm {
+    padding: 2px;
   }
 }
