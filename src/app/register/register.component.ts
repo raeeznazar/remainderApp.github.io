@@ -10,7 +10,7 @@ export class RegisterComponent implements OnInit {
   heading = 'Your remainder App';
 
   registerForm = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]*')]],
+    uname: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]*')]],
     username: ['', [Validators.required, Validators.pattern('[0-9]*')]],
     password: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]*')]],
   });
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
   register() {
-    var name = this.registerForm.value.name;
+    var uname = this.registerForm.value.uname;
     var username = this.registerForm.value.username;
     var password = this.registerForm.value.password;
 

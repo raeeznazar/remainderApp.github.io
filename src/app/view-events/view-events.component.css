@@ -1,0 +1,8 @@
+.eventView-body {
+  background-image: url("src/assets/login.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: multiply;
+  height: 100vh;
+}

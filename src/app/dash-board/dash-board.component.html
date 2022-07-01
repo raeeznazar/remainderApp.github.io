@@ -2,16 +2,86 @@
   <nav class="navbar bg-warning">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"> Your Remainder App </a>
+      <a class="btn btn-primary" href="#"> Logout </a>
     </div>
   </nav>
 
   <div class="container-fluid">
     <div class="row">
+      <div class="col-12">
+        <div>
+          <h2 class="mt-4 text-center text-success">Welcome user</h2>
+          <a class="btn btn-danger float-end mt-2" href="#">
+            Delete your account
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-sm-12 aligns">
         <div class="card" style="width: 60%">
           <div class="card-body">
             <h5 class="card-title text-center">Dash Board</h5>
+
             <form [formGroup]="eventForm">
+              <div>
+                <label for="" class="text-secondary mb-2"
+                  >Enter username (In nueomericals)</label
+                >
+              </div>
+              <div class="input-group form-group">
+                <div class="icon">
+                  <span class="material-symbols-outlined"> person </span>
+                </div>
+                <input
+                  type="text"
+                  name="username"
+                  formControlName="username"
+                  class="form-control"
+                  placeholder="user name"
+                  id="name"
+                  required
+                />
+              </div>
+              <div
+                class="mt-2 ps-2 text-danger"
+                *ngIf="
+                  this.eventForm.get('username')?.touched &&
+                  this.eventForm.get('username')?.errors
+                "
+              >
+                invalid form
+              </div>
+
+              <div>
+                <label for="" class="text-secondary mb-2"
+                  >Enter password)</label
+                >
+              </div>
+              <div class="input-group form-group">
+                <div class="icon">
+                  <span class="material-symbols-outlined"> key </span>
+                </div>
+                <input
+                  type="password"
+                  name="password"
+                  formControlName="password"
+                  class="form-control"
+                  placeholder="password"
+                  id="name"
+                  required
+                />
+              </div>
+              <div
+                class="mt-2 ps-2 text-danger"
+                *ngIf="
+                  this.eventForm.get('password')?.touched &&
+                  this.eventForm.get('password')?.errors
+                "
+              >
+                invalid form
+              </div>
+
               <div>
                 <label for="" class="text-secondary mb-2">Enter Date</label>
               </div>
