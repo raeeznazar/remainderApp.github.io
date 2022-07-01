@@ -6,16 +6,81 @@
   </nav>
 
   <div class="container-fluid">
-    <div style="height: 70vh" class="row aligns">
-      <div class="col-sm-12 d-flex justify-content-center align-items-center">
-        <div class="card h-100" style="width: 80%">
+    <div class="row">
+      <div class="col-sm-12 aligns">
+        <div class="card" style="width: 60%">
           <div class="card-body">
-            <h5 class="card-title">Dash Board</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title text-center">Dash Board</h5>
+            <form [formGroup]="eventForm">
+              <div>
+                <label for="" class="text-secondary mb-2">Enter Date</label>
+              </div>
+              <div class="input-group form-group">
+                <div class="icon">
+                  <span class="material-symbols-outlined"> event </span>
+                </div>
+                <input
+                  type="date"
+                  name="date"
+                  formControlName="date"
+                  class="form-control"
+                  placeholder="First Name"
+                  id="name"
+                  required
+                />
+              </div>
+              <div
+                class="mt-2 ps-2 text-danger"
+                *ngIf="
+                  this.eventForm.get('date')?.touched &&
+                  this.eventForm.get('date')?.errors
+                "
+              >
+                invalid form
+              </div>
+
+              <div>
+                <label for="" class="text-secondary mt-2 mb-2"
+                  >Description of Event</label
+                >
+              </div>
+
+              <div class="input-group form-group">
+                <!-- <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="First Name"
+                id="name"
+                required
+              /> -->
+
+                <textarea
+                  name="eventText"
+                  formControlName="eventText"
+                  id=""
+                  cols="100"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div
+                class="mt-2 ps-2 text-danger"
+                *ngIf="
+                  this.eventForm.get('eventText')?.touched &&
+                  this.eventForm.get('eventText')?.errors
+                "
+              >
+                invalid form
+              </div>
+
+              <a
+                href="#"
+                value="add"
+                type="submit"
+                class="btn btn-primary mt-3 float-end"
+                >Add discription</a
+              >
+            </form>
           </div>
         </div>
       </div>
