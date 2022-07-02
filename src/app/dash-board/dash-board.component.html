@@ -11,6 +11,9 @@
       <div class="col-12">
         <div>
           <h2 class="mt-4 text-center text-success">Welcome {{ user }}</h2>
+          <h4 class="text-secondary text-center">
+            Login details : {{ loginDate | date: "shortDate" }}
+          </h4>
           <a class="btn btn-danger float-end mt-2" href="#">
             Delete your account
           </a>

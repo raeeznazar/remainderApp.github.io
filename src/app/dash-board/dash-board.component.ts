@@ -17,11 +17,15 @@ export class DashBoardComponent implements OnInit {
   });
   user = JSON.parse(localStorage.getItem('currentUser') || '');
 
+  loginDate: any;
+
   constructor(
     private fb: FormBuilder,
     private ds: DataService,
     private router: Router
-  ) {}
+  ) {
+    this.loginDate = new Date();
+  }
 
   ngOnInit(): void {}
 
