@@ -1,6 +1,8 @@
+// JsonWebToken import
+const jwt = require("jsonwebtoken");
 // register name, username, password
 
-database = {
+const database = {
   1000: {
     username: 1000,
     uname: "raeez",
@@ -45,12 +47,25 @@ const login = (username, password) => {
 
   if (username in database) {
     if (password == database[username]["password"]) {
-      currentUser = [database]["uname"];
+      currentUser = database[username]["uname"];
       currentUsername = username;
+
+      const token = jwt.sign(
+        {
+          // store username in currentUsername
+          currentUsername: username,
+        },
+        "supersecret123456789"
+      );
+
       return {
         statuscode: 200,
         status: true,
         message: "Sucessfully login",
+        token,
+
+        currentUser,
+        currentUsername,
       };
     } else {
       return {
@@ -68,20 +83,31 @@ const login = (username, password) => {
   }
 };
 
-const add = (username, password, date, eventText) => {
+const add = (req, username, password, date, eventText) => {
+  console.log(req.reqcurrentUsername, username);
+
+  //   if (username in database && req.reqcurrentUsername === username)
   if (username in database) {
     if (password == database[username]["password"]) {
-      database[username]["date"] = date;
-      database[username]["evenText"] = eventText;
-      database[username]["viewEvent"].push({
-        date: date,
-        details: eventText,
-      });
-      return {
-        statuscode: 200,
-        status: true,
-        message: `successfully addedadded event date:-- ${database[username]["date"]} & event details:-- ${database[username]["evenText"]}`,
-      };
+      if (req.reqcurrentUsername !== username) {
+        return {
+          statuscode: 401,
+          status: false,
+          message: "access denined",
+        };
+      } else {
+        database[username]["date"] = date;
+        database[username]["evenText"] = eventText;
+        database[username]["viewEvent"].push({
+          date: date,
+          details: eventText,
+        });
+        return {
+          statuscode: 200,
+          status: true,
+          message: `successfully addedadded event date:-- ${database[username]["date"]} & event details:-- ${database[username]["evenText"]}`,
+        };
+      }
     }
     return {
       statuscode: 422,
