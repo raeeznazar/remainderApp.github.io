@@ -1,5 +1,7 @@
 //import express
 const express = require("express");
+//import cors ;- because this is server's entry point
+const cors = require("cors");
 const { JsonWebTokenError } = require("jsonwebtoken");
 
 // importing data service file
@@ -10,6 +12,15 @@ const app = express();
 
 // to parse jason
 app.use(express.json());
+
+
+//use cors 
+app.use(
+    cors({
+        // orgin means client's url
+      origin: "http://localhost:4200",
+    })
+  );
 
 // JsonWebToken import
 const jwt = require("jsonwebtoken");
