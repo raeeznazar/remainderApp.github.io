@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-dash-board',
@@ -13,9 +15,23 @@ export class DashBoardComponent implements OnInit {
     username: ['', [Validators.required, Validators.pattern('[0-9]*')]],
     password: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]*')]],
   });
-  constructor(private fb: FormBuilder) {}
+  user = JSON.parse(localStorage.getItem('currentUser') || '');
+
+  constructor(
+    private fb: FormBuilder,
+    private ds: DataService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUsername');
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('');
+  }
+
   add() {
     var date = this.eventForm.value.date;
     var eventText = this.eventForm.value.eventText;
@@ -23,6 +39,16 @@ export class DashBoardComponent implements OnInit {
     var password = this.eventForm.value.password;
 
     if (this.eventForm.valid) {
+      this.ds.add(username, password, date, eventText).subscribe(
+        (result: any) => {
+          if (result) {
+            alert(result.message);
+          }
+        },
+        (result) => {
+          alert(result.error.message);
+        }
+      );
     }
   }
 }

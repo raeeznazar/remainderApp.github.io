@@ -12,13 +12,11 @@ import { DashBoardComponent } from './dash-board/dash-board.component';
 import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 import { ViewEventsComponent } from './view-events/view-events.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-
     DashBoardComponent,
     DeleteBtnComponent,
     ViewEventsComponent,

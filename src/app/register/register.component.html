@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-12">
         <div class="card-place">
-          <form [formGroup]="registerForm">
+          <form [formGroup]="registerForm" (ngSubmit)="register()">
             <div
               class="card position-absolute top-50 start-50 translate-middle"
               style="width: 70%"
@@ -120,7 +120,7 @@
                           type="button"
                           class="btn btn-primary mt-4"
                           type="submit"
-                          value="Register"
+                          value="submit"
                           style="width: 100%"
                         >
                           Register
