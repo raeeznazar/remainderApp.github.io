@@ -84,8 +84,7 @@ const register = (uname, username, password) => {
 
 const login = (username, password) => {
   //  fetch details from mongodb
-  return db.User.findOne({ username, password })
-  .then((user) => {
+  return db.User.findOne({ username, password }).then((user) => {
     if (user) {
       currentUser = user.uname;
       currentUsername = username;
@@ -156,56 +155,100 @@ const login = (username, password) => {
 const add = (req, username, password, date, eventText) => {
   console.log(req.reqcurrentUsername, username);
 
-  //   if (username in database && req.reqcurrentUsername === username)
-  if (username in database) {
-    if (password == database[username]["password"]) {
-      if (req.reqcurrentUsername !== username) {
-        return {
-          statuscode: 401,
-          status: false,
-          message: "access denined",
-        };
-      } else {
-        database[username]["date"] = date;
-        database[username]["evenText"] = eventText;
-        database[username]["viewEvent"].push({
-          date: date,
-          details: eventText,
-        });
-        return {
-          statuscode: 200,
-          status: true,
-          message: `successfully addedadded event date:-- ${database[username]["date"]} & event details:-- ${database[username]["evenText"]}`,
-        };
-      }
+  return db.User.findOne({ username, password }).then((user) => {
+    if (req.reqcurrentUsername !== username) {
+      return {
+        statuscode: 401,
+        status: false,
+        message: "access denined",
+      };
     }
-    return {
-      statuscode: 422,
-      status: false,
-      message: "Incorrect password",
-    };
-  }
-  return {
-    statuscode: 401,
-    status: false,
-    message: "user does not exist, register first",
-  };
+
+    if (user) {
+      user.date = date;
+      user.evenText = eventText;
+      user.viewEvent.push({
+        date: date,
+        details: eventText,
+      });
+      //method to save this events to database
+
+      user.save();
+      return {
+        statuscode: 200,
+        status: true,
+        message: `successfully addedadded event date:-- ${user.date} & event details:-- ${user.evenText}`,
+      };
+    }
+  });
+
+  //   //   if (username in database && req.reqcurrentUsername === username)
+  //   if (username in database) {
+  //     if (password == database[username]["password"]) {
+  //       if (req.reqcurrentUsername !== username) {
+  //         return {
+  //           statuscode: 401,
+  //           status: false,
+  //           message: "access denined",
+  //         };
+  //       } else {
+  //         database[username]["date"] = date;
+  //         database[username]["evenText"] = eventText;
+  //         database[username]["viewEvent"].push({
+  //           date: date,
+  //           details: eventText,
+  //         });
+  //         return {
+  //           statuscode: 200,
+  //           status: true,
+  //           message: `successfully addedadded event date:-- ${database[username]["date"]} & event details:-- ${database[username]["evenText"]}`,
+  //         };
+  //       }
+  //     }
+  //     return {
+  //       statuscode: 422,
+  //       status: false,
+  //       message: "Incorrect password",
+  //     };
+  //   }
+  //   return {
+  //     statuscode: 401,
+  //     status: false,
+  //     message: "user does not exist, register first",
+  //   };
 };
 
+// view event
 const viewEvent = (username) => {
-  if (username in database) {
-    return {
-      statuscode: 200,
-      status: true,
-      message: database[username].viewEvent,
-    };
-  } else {
-    return {
-      statuscode: 422,
-      status: false,
-      message: "Account number does not exist",
-    };
-  }
+  return db.User.findOne({ username }).then((user) => {
+    if (user) {
+      return {
+        statuscode: 200,
+        status: true,
+        message: user.viewEvent,
+      };
+    } else {
+      return {
+        statuscode: 422,
+        status: false,
+        message: "Account number does not exist",
+      };
+    }
+  });
+
+  //   if (username in database) {
+  //     return {
+  //       statuscode: 200,
+  //       status: true,
+  //       message: database[username].viewEvent,
+  //     };
+  //   } else {
+  //     return {
+  //       statuscode: 422,
+  //       status: false,
+  //       message: "Account number does not exist",
+  //     };
+  //   }
 };
 
 module.exports = {

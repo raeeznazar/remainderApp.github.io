@@ -52,19 +52,23 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/add", jwtMiddleWare, (req, res) => {
-  const result = dataService.add(
-    req,
-    req.body.username,
-    req.body.password,
-    req.body.date,
-    req.body.eventText
-  );
-  res.status(result.statuscode).json(result);
+  dataService
+    .add(
+      req,
+      req.body.username,
+      req.body.password,
+      req.body.date,
+      req.body.eventText
+    )
+    .then((result) => {
+      res.status(result.statuscode).json(result);
+    });
 });
 
 app.post("/viewEvent", jwtMiddleWare, (req, res) => {
-  const result = dataService.viewEvent(req.body.username);
-  res.status(result.statuscode).json(result);
+  dataService.viewEvent(req.body.username).then((result) => {
+    res.status(result.statuscode).json(result);
+  });
 });
 
 app.listen(3001, () => {
