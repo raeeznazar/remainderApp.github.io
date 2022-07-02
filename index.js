@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 // jwtMiddleWare
 const jwtMiddleWare = (req, res, next) => {
   try {
-    const token = req.body.token;
+    const token = req.headers["x-access-token"];
     const data = jwt.verify(token, "supersecret123456789");
     console.log(jwt.verify(token, "supersecret123456789"));
     req.reqcurrentUsername = data.currentUsername;
@@ -37,17 +37,18 @@ const jwtMiddleWare = (req, res, next) => {
 // register function call
 
 app.post("/register", (req, res) => {
-  const result = dataService.register(
-    req.body.uname,
-    req.body.username,
-    req.body.password
-  );
-  res.status(result.statuscode).json(result);
+  // assynchrnous, we can't assign assynchronous datas into constant.
+  dataService
+    .register(req.body.uname, req.body.username, req.body.password)
+    .then((result) => {
+      res.status(result.statuscode).json(result);
+    });
 });
 
 app.post("/login", (req, res) => {
-  const result = dataService.login(req.body.username, req.body.password);
-  res.status(result.statuscode).json(result);
+  dataService.login(req.body.username, req.body.password).then((result) => {
+    res.status(result.statuscode).json(result);
+  });
 });
 
 app.post("/add", jwtMiddleWare, (req, res) => {

@@ -1,5 +1,9 @@
 // JsonWebToken import
 const jwt = require("jsonwebtoken");
+
+//import db
+const db = require("./db");
+
 // register name, username, password
 
 const database = {
@@ -13,43 +17,78 @@ const database = {
   },
 };
 
+// Register function
+
 const register = (uname, username, password) => {
-  // username already exist
-  if (username in database) {
-    return {
-      statuscode: 401,
-      status: false,
-      message: "Account number already exist",
-    };
-  } else {
-    // add to database
-    database[username] = {
-      username,
-      uname,
-      password,
-      date: 0,
-      eventText: "",
-      viewEvent: [],
-    };
+  // asynchronous
 
-    console.log(database);
+  return db.User.findOne({ username }).then((user) => {
+    console.log(user);
+    // if user already exist
+    if (user) {
+      return {
+        statuscode: 401,
+        status: false,
+        message: "Account number already exist",
+      };
+    } else {
+      //create object for model that we created in database
 
-    return {
-      statuscode: 200,
-      status: true,
-      message: "Sucessfully registered, please login",
-    };
-  }
+      const newUser = new db.User({
+        username,
+        uname,
+        password,
+        date: "",
+        eventText: "",
+        viewEvent: [],
+      });
+      //method to save new user in db ie newUser.save()
+      newUser.save();
+      return {
+        statuscode: 200,
+        status: true,
+        message: "Sucessfully registered, please login",
+      };
+    }
+  });
+
+  //   // username already exist
+  //   if (username in database) {
+  //     return {
+  //       statuscode: 401,
+  //       status: false,
+  //       message: "Account number already exist",
+  //     };
+  //   } else {
+  //     // add to database
+  //     database[username] = {
+  //       username,
+  //       uname,
+  //       password,
+  //       date: 0,
+  //       eventText: "",
+  //       viewEvent: [],
+  //     };
+
+  //     console.log(database);
+
+  //     return {
+  //       statuscode: 200,
+  //       status: true,
+  //       message: "Sucessfully registered, please login",
+  //     };
+  //   }
 };
 
+// Login function
+
 const login = (username, password) => {
-  // already in database
-
-  if (username in database) {
-    if (password == database[username]["password"]) {
-      currentUser = database[username]["uname"];
+  //  fetch details from mongodb
+  return db.User.findOne({ username, password })
+  .then((user) => {
+    if (user) {
+      currentUser = user.uname;
       currentUsername = username;
-
       const token = jwt.sign(
         {
           // store username in currentUsername
@@ -69,18 +108,49 @@ const login = (username, password) => {
       };
     } else {
       return {
-        statuscode: 422,
+        statuscode: 401,
         status: false,
-        message: "Incorrect password",
+        message: "invalid credentials",
       };
     }
-  } else {
-    return {
-      statuscode: 401,
-      status: false,
-      message: "user does not exist, register first",
-    };
-  }
+  });
+  // already in database
+  //   if (username in database) {
+  //     if (password == database[username]["password"]) {
+  //       currentUser = database[username]["uname"];
+  //       currentUsername = username;
+
+  //       const token = jwt.sign(
+  //         {
+  //           // store username in currentUsername
+  //           currentUsername: username,
+  //         },
+  //         "supersecret123456789"
+  //       );
+
+  //       return {
+  //         statuscode: 200,
+  //         status: true,
+  //         message: "Sucessfully login",
+  //         token,
+
+  //         currentUser,
+  //         currentUsername,
+  //       };
+  //     } else {
+  //       return {
+  //         statuscode: 422,
+  //         status: false,
+  //         message: "Incorrect password",
+  //       };
+  //     }
+  //   } else {
+  //     return {
+  //       statuscode: 401,
+  //       status: false,
+  //       message: "user does not exist, register first",
+  //     };
+  //   }
 };
 
 const add = (req, username, password, date, eventText) => {
