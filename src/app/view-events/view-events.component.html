@@ -1,10 +1,31 @@
-
 <div class="eventView-body">
-    <nav class="navbar bg-warning">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"> Your Remainder App </a>
-        <a class="btn btn-primary" href="#"> Home </a>
-      </div>
-    </nav>
-
+  <nav class="navbar bg-warning">
+    <div class="container-fluid">
+      <a class="navbar-brand"> Your Remainder App </a>
+      <a class="btn btn-primary" routerLink="/dashboard"> Home </a>
     </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="mt-5 text-center">Event's of {{ user }}</h2>
+
+        <table class="table table-dark table-striped mt-5">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Events</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let v of viewEvents">
+              <td>{{ v.date }}</td>
+              <td>{{ v.details }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,21 +10,42 @@
     <div class="row">
       <div class="col-12">
         <div>
-          <h2 class="mt-4 text-center text-success">Welcome {{ user }}</h2>
-          <h4 class="text-secondary text-center">
-            Login details : {{ loginDate | date: "shortDate" }}
-          </h4>
-          <a class="btn btn-danger float-end mt-2" href="#">
+          <h2 class="mt-4 text-center text-success">
+            Welcome {{ user }}, Login details :
+            {{ loginDate | date: "shortDate" }}
+          </h2>
+
+          <button
+            class="btn btn-danger float-end mt-2"
+            (click)="deleteFromParent()"
+          >
             Delete your account
-          </a>
+          </button>
+          <button
+            class="btn btn-primary float-start mt-2"
+            routerLink="/eventsView"
+            [ngClass]="del_currentUsername ? 'style1' : ''"
+          >
+            view your events
+          </button>
         </div>
       </div>
     </div>
     <div class="row">
+      <div class="col-12">
+        <app-delete-btn
+          [currentUsername]="del_currentUsername"
+          (DelPageTscancel)="onDashCancel()"
+          (DelPageTsdelete)="onDashDelete($event)"
+        ></app-delete-btn>
+      </div>
+    </div>
+
+    <div class="row" [ngClass]="del_currentUsername ? 'style1' : ''">
       <div class="col-sm-12 aligns">
         <div class="card" style="width: 60%">
-          <div class="card-body">
-            <h5 class="card-title text-center">Dash Board</h5>
+          <div class="card-body mt-5">
+            <h5>Dash Board</h5>
 
             <form [formGroup]="eventForm" (ngSubmit)="add()">
               <div>
@@ -42,7 +63,7 @@
                   formControlName="username"
                   class="form-control"
                   placeholder="user name"
-                  id="name"
+                  id="nameperson"
                   required
                 />
               </div>
@@ -71,7 +92,7 @@
                   formControlName="password"
                   class="form-control"
                   placeholder="password"
-                  id="name"
+                  id="namepass"
                   required
                 />
               </div>
@@ -98,7 +119,7 @@
                   formControlName="date"
                   class="form-control"
                   placeholder="First Name"
-                  id="name"
+                  id="nameEvent"
                   required
                 />
               </div>

@@ -60,4 +60,24 @@ export class DataService {
     //add api
     return this.http.post('http://localhost:3001/add', data, this.getOptions());
   }
+
+  // view api call
+  viewEvent(username: any) {
+    const data = {
+      username,
+    };
+    //add api
+    return this.http.post(
+      'http://localhost:3001/viewEvent',
+      data,
+      this.getOptions()
+    );
+  }
+
+  onDashDelete = (username: any) => {
+    return this.http.delete(
+      'http://localhost:3001/deleteUsername/' + username,
+      this.getOptions()
+    );
+  };
 }

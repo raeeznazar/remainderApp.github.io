@@ -18,6 +18,7 @@ export class DashBoardComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('currentUser') || '');
 
   loginDate: any;
+  del_currentUsername: any;
 
   constructor(
     private fb: FormBuilder,
@@ -54,5 +55,29 @@ export class DashBoardComponent implements OnInit {
         }
       );
     }
+  }
+
+  // delete from parent for deletebtn
+  deleteFromParent() {
+    this.del_currentUsername = JSON.parse(
+      localStorage.getItem('currentUsername') || ''
+    );
+  }
+
+  onDashCancel() {
+    this.del_currentUsername = '';
+  }
+  onDashDelete(event: any) {
+    this.ds.onDashDelete(event).subscribe(
+      (result: any) => {
+        if (result) {
+          alert(result.message);
+          this.router.navigateByUrl('');
+        }
+      },
+      (result) => {
+        alert(result.error.message);
+      }
+    );
   }
 }
