@@ -225,7 +225,10 @@ const viewEvent = (username) => {
       return {
         statuscode: 200,
         status: true,
-        message: user.viewEvent,
+        username: user.username,
+        viewEvents: user.viewEvent,
+        name: user.uname,
+        message: `Events of ${user.uname}`,
       };
     } else {
       return {
@@ -251,9 +254,28 @@ const viewEvent = (username) => {
   //   }
 };
 
+const deleteUsername = (username) => {
+  return db.User.deleteOne({ username }).then((user) => {
+    if (!user) {
+      return {
+        statuscode: 401,
+        status: false,
+        message: "Operartion failed",
+      };
+    } else {
+      return {
+        statuscode: 200,
+        status: true,
+        message: "Account Number" + username + "deleted successfully...",
+      };
+    }
+  });
+};
+
 module.exports = {
   register,
   login,
   add,
   viewEvent,
+  deleteUsername,
 };

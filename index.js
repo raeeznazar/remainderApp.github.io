@@ -13,17 +13,16 @@ const app = express();
 // to parse jason
 app.use(express.json());
 
-
-//use cors 
-app.use(
-    cors({
-        // orgin means client's url
-      origin: "http://localhost:4200",
-    })
-  );
-
 // JsonWebToken import
 const jwt = require("jsonwebtoken");
+
+//use cors
+app.use(
+  cors({
+    // orgin means client's url
+    origin: "http://localhost:4200",
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("GET REQUEST");
@@ -78,6 +77,12 @@ app.post("/add", jwtMiddleWare, (req, res) => {
 
 app.post("/viewEvent", jwtMiddleWare, (req, res) => {
   dataService.viewEvent(req.body.username).then((result) => {
+    res.status(result.statuscode).json(result);
+  });
+});
+
+app.delete("/deleteUsername/:username", jwtMiddleWare, (req, res) => {
+  dataService.deleteUsername(req.params.username).then((result) => {
     res.status(result.statuscode).json(result);
   });
 });
